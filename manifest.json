@@ -1,0 +1,20 @@
+{
+  "name": "Chess Tier",
+  "short_name": "Chess Tier",
+  "manifest_version": 2,
+  "version": "1.0",
+  "description": "Replaces your chess ELO with a your Chess Tier",
+  "author": "Tristrum Tuttle",
+  "background": {
+    "scripts": [ "background.js" ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.chess.com/*"],
+      "all_frames": true,
+      "js": ["main_script.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
