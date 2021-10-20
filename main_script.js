@@ -1,17 +1,18 @@
 // This is needed to prevent infinite looping when the mutation observer is
 // triggered.
 let globalRatings = new Map();
+let useUSCF = false
 
 function run() {
   // Hide chat ratings
-  // const chatStartRatings = document.querySelectorAll('div.live-game-start-component')
-  // for (let i = 0; i < chatStartRatings.length; i++) {
-  //   chatStartRatings[i].style.display = "none";
-  // }
-  // const chatEndRatings = document.querySelectorAll('div.live-game-over-component')
-  // for (let i = 0; i < chatEndRatings.length; i++) {
-  //   chatEndRatings[i].style.display = "none";
-  // }
+  const chatStartRatings = document.querySelectorAll('div.live-game-start-component')
+  for (let i = 0; i < chatStartRatings.length; i++) {
+    chatStartRatings[i].style.display = "none";
+  }
+  const chatEndRatings = document.querySelectorAll('div.live-game-over-component')
+  for (let i = 0; i < chatEndRatings.length; i++) {
+    chatEndRatings[i].style.display = "none";
+  }
   // Replace user rating with a tier
   const tagline = document.querySelectorAll('div.user-tagline-component:not(.archive-tab-player)');
   for (let i = 0; i < tagline.length; i++) {
@@ -34,7 +35,7 @@ function run() {
     if (!isNaN(ratingNum) && oldRatingNum !== ratingNum) {
       swapNewRating(endRating, rating, ratingNum, mapKey)
       const ratingChange = endRating.querySelector('div.rating-change-right')
-      if (!isNaN(oldRatingNum) && calculateBlitzTier(ratingNum) !== calculateBlitzTier(oldRatingNum)) {
+      if (!isNaN(oldRatingNum) && calculateTier(ratingNum) !== calculateTier(oldRatingNum)) {
         if (oldRatingNum < ratingNum) {
           ratingChange.style.display = "block";
           ratingChange.innerHTML = 'Promoted!'
@@ -81,14 +82,14 @@ function calculateTier(ratingNum) {
 
   if (timeControlNode !== null) {
     if (timeControlNode.classList.contains('bullet') || (timeControlNode.classList.contains('blitz'))) {
-      return calculateBlitzTier(ratingNum)
+      return useUSCF ? uscfNormalizedBlitzTier(ratingNum) : calculateBlitzTier(ratingNum)
     } else if (timeControlNode.classList.contains('rapid')) {
-      return calculateRapidTier(ratingNum)
+      return useUSCF ? uscfNormalizedRapidTier(ratingNum) : calculateRapidTier(ratingNum)
     } else {
-      return calculateDailyTier(ratingNum)
+      return useUSCF ? uscfNormalizedRapidTier(ratingNum) : calculateDailyTier(ratingNum)
     }
   } else {
-    return calculateDailyTier(ratingNum)
+    return useUSCF ? uscfNormalizedRapidTier(ratingNum) : calculateDailyTier(ratingNum)
   }
 }
 
@@ -254,9 +255,125 @@ function calculateDailyTier(ratingNum) {
   }
 }
 
+function uscfNormalizedBlitzTier(ratingNum) {
+  if (ratingNum < 200) {
+    return "Bronze I"
+  } else if (ratingNum < 400) {
+    return "Bronze II"
+  } else if (ratingNum < 600) {
+    return "Bronze III"
+  } else if (ratingNum < 800) {
+    return "Bronze IV"
+  } else if (ratingNum < 1000) {
+    return "Silver I"
+  } else if (ratingNum < 1133) {
+    return "Silver II"
+  } else if (ratingNum < 1266) {
+    return "Silver III"
+  } else if (ratingNum < 1400) {
+    return "Silver IV"
+  } else if (ratingNum < 1512) {
+    return "Gold I"
+  } else if (ratingNum < 1624) {
+    return "Gold II"
+  } else if (ratingNum < 1736) {
+    return "Gold III"
+  } else if (ratingNum < 1850) {
+    return "Gold IV"
+  } else if (ratingNum < 1910) {
+    return "Platinum I"
+  } else if (ratingNum < 1960) {
+    return "Platinum II"
+  } else if (ratingNum < 2020) {
+    return "Platinum III"
+  } else if (ratingNum < 2100) {
+    return "Platinum IV"
+  } else if (ratingNum < 2150) {
+    return "Diamond I"
+  } else if (ratingNum < 2200) {
+    return "Diamond II"
+  } else if (ratingNum < 2250) {
+    return "Diamond III"
+  } else if (ratingNum < 2300) {
+    return "Diamond IV"
+  } else if (ratingNum < 2350) {
+    return "Champion I"
+  } else if (ratingNum < 2400) {
+    return "Champion II"
+  } else if (ratingNum < 2450) {
+    return "Champion III"
+  } else if (ratingNum < 2500) {
+    return "Champion IV"
+  } else {
+    return "Grand Champion"
+  }
+}
 
-var observer = new MutationObserver(function(mutations) {
-  run();
+function uscfNormalizedRapidTier(ratingNum) {
+  if (ratingNum < 250) {
+    return "Bronze I"
+  } else if (ratingNum < 500) {
+    return "Bronze II"
+  } else if (ratingNum < 750) {
+    return "Bronze III"
+  } else if (ratingNum < 1000) {
+    return "Bronze IV"
+  } else if (ratingNum < 1200) {
+    return "Silver I"
+  } else if (ratingNum < 1275) {
+    return "Silver II"
+  } else if (ratingNum < 1350) {
+    return "Silver III"
+  } else if (ratingNum < 1425) {
+    return "Silver IV"
+  } else if (ratingNum < 1500) {
+    return "Gold I"
+  } else if (ratingNum < 1625) {
+    return "Gold II"
+  } else if (ratingNum < 1750) {
+    return "Gold III"
+  } else if (ratingNum < 1850) {
+    return "Gold IV"
+  } else if (ratingNum < 1910) {
+    return "Platinum I"
+  } else if (ratingNum < 1960) {
+    return "Platinum II"
+  } else if (ratingNum < 2020) {
+    return "Platinum III"
+  } else if (ratingNum < 2100) {
+    return "Platinum IV"
+  } else if (ratingNum < 2150) {
+    return "Diamond I"
+  } else if (ratingNum < 2200) {
+    return "Diamond II"
+  } else if (ratingNum < 2250) {
+    return "Diamond III"
+  } else if (ratingNum < 2300) {
+    return "Diamond IV"
+  } else if (ratingNum < 2350) {
+    return "Champion I"
+  } else if (ratingNum < 2400) {
+    return "Champion II"
+  } else if (ratingNum < 2450) {
+    return "Champion III"
+  } else if (ratingNum < 2500) {
+    return "Champion IV"
+  } else {
+    return "Grand Champion"
+  }
+}
+
+chrome.storage.sync.get(["useTier", "useUSCF"], (items) => {
+  if (items["useTier"] === false) {
+    return;
+  }
+  if (items["useUSCF"] !== undefined) {
+    useUSCF = items["useUSCF"]
+  }
+  var observer = new MutationObserver(function(mutations) {
+    run();
+  });
+
+  observer.observe(document, { childList: true, subtree: true });
 });
 
-observer.observe(document, { childList: true, subtree: true });

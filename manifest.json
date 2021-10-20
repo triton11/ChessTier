@@ -1,13 +1,14 @@
 {
   "name": "Chess Tier",
   "short_name": "Chess Tier",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "version": "1.0",
   "description": "Replaces your chess ELO with a your Chess Tier",
   "author": "Tristrum Tuttle",
-  "background": {
-    "scripts": [ "background.js" ],
-    "persistent": false
+  "icons": {
+    "16": "/img/chesstier16.png",
+    "48": "/img/chesstier48.png",
+    "128": "/img/chesstier128.png"
   },
   "content_scripts": [
     {
@@ -16,5 +17,12 @@
       "js": ["main_script.js"],
       "run_at": "document_idle"
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["storage", "activeTab", "scripting"]
 }
