@@ -3,7 +3,7 @@
   "short_name": "Chess Tier",
   "manifest_version": 3,
   "version": "1.0",
-  "description": "Replaces your chess ELO with a your Chess Tier",
+  "description": "Replaces your chess.com Elo with a Chess Tier",
   "author": "Tristrum Tuttle",
   "icons": {
     "16": "/img/chesstier16.png",
@@ -18,9 +18,6 @@
       "run_at": "document_idle"
     }
   ],
-  "background": {
-    "service_worker": "background.js"
-  },
   "action": {
     "default_popup": "popup.html"
   },
