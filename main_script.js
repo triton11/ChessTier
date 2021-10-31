@@ -129,7 +129,7 @@ function calculateBlitzTier(ratingNum) {
     return '⚔️ Platinum I';
   } else if (ratingNum < 1150) {
     return '⚔️ Platinum II';
-  } else if (ratingNum < 1220) {
+  } else if (ratingNum < 1225) {
     return '⚔️ Platinum III';
   } else if (ratingNum < 1300) {
     return '⚔️ Platinum IV';
