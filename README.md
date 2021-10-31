@@ -11,7 +11,7 @@ There are currently 5 tiers, each with 4 to 5 sub-tiers.
 - 💎 Diamond (~7% of players)
 - 👑 Champion (~3% of players)
 
-Your tier is calculated by taking your chess.com Elo for the specified time control and mapping it to a tier based on the <a href="https://www.chess.com/leaderboard/live">global distribution</a> of player's Elos for that time control. I chose tier mappings using a <a href="https://twitter.com/blaustoise/status/1125821120035221504/photo/1">goldilocks distribution</a>, in order to get tiers similar to <a href="https://www.esportstales.com/league-of-legends/rank-distribution-season-9">those used in Overwatch, League of Legends, and Dota</a>.
+Your tier is calculated by taking your chess.com Elo (technically a <a href="https://www.chess.com/blog/kurtgodden/elo-to-glicko-your-rating-explained">Glicko rating</a>) for the specified time control and mapping it to a tier based on the <a href="https://www.chess.com/leaderboard/live">global distribution</a> of player's Elos for that time control. I chose tier mappings using a distribution with a positive skew, in order to get tiers similar to <a href="https://www.esportstales.com/league-of-legends/rank-distribution-season-9">those used in Overwatch, League of Legends, and Dota</a> while also balancing against inactive players.
 
 You can also turn on the "use USCF ratings?" toggle to get a tier that is based on the Elo rating distribution of US Chess Federation players instead of chess.com players.
 
