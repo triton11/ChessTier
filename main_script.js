@@ -3,15 +3,12 @@
 let globalRatings = new Map();
 
 function run() {
-  // Hide chat ratings
-  const chatStartRatings = document.querySelectorAll('div.live-game-start-component')
-  for (let i = 0; i < chatStartRatings.length; i++) {
-    chatStartRatings[i].style.display = 'none';
+  // Hide end user rating
+  const newRatingNode = document.querySelector('span.new-rating-component');
+  if (newRatingNode) {
+    newRatingNode.style.display = 'none';
   }
-  const chatEndRatings = document.querySelectorAll('div.live-game-over-component')
-  for (let i = 0; i < chatEndRatings.length; i++) {
-    chatEndRatings[i].style.display = 'none';
-  }
+
   // Replace user rating with a tier
   const tagline = document.querySelectorAll('div.user-tagline-component:not(.archive-tab-player)');
   for (let i = 0; i < tagline.length; i++) {
@@ -24,17 +21,20 @@ function run() {
       }
     }
   }
+
   // Replace end user rating (and rating change) with a tier
   const endRating = document.querySelector('div.rating-value-value');
   if (endRating !== null) {
     const rating = endRating.querySelector('span.new-rating-component');
     const ratingNum = parseInt(rating.innerHTML.replace(/\D/g,''), 10);
+    const ratingChange = endRating.querySelector('div.rating-change-right');
+    const ratingChangeNum = parseInt(ratingChange.innerHTML.replace(/\D/g,''), 10);
     const mapKey = 'endRating';
     const oldRatingNum = globalRatings.get(mapKey);
     if (!isNaN(ratingNum) && oldRatingNum !== ratingNum) {
       swapNewRating(endRating, rating, ratingNum, mapKey);
-      const ratingChange = endRating.querySelector('div.rating-change-right');
       if (!isNaN(oldRatingNum) && calculateTier(ratingNum) !== calculateTier(oldRatingNum)) {
+        ratingChange.classList.add('rating-changed');
         if (oldRatingNum < ratingNum) {
           ratingChange.style.display = 'block';
           ratingChange.innerHTML = 'Promoted!';
@@ -42,10 +42,40 @@ function run() {
           ratingChange.style.display = 'block';
           ratingChange.innerHTML = 'Demoted.';
         }
-      } else {
+      } else if (!ratingChange.classList.contains('rating-changed')) {
         ratingChange.style.display = 'none';
+      } else {
+        ratingChange.style.display = 'block';
       }
     }
+  }
+
+  // Hide chat ratings
+  const chatStartRatings = document.querySelectorAll('div.live-game-start-component')
+  for (let i = 0; i < chatStartRatings.length; i++) {
+    // TODO: Change chat ratings
+    // const rating = chatStartRatings[i].querySelector('span.user-rating');
+    // if (rating !== null) {
+    //   const ratingNum = parseInt(rating.innerHTML.replace(/\D/g,''), 10);
+    //   const username = chatStartRatings[i].querySelector('.user-username').innerHTML + '_' + i.toString(); 
+    //   if (!isNaN(ratingNum) && globalRatings.get(username) !== ratingNum) {
+    //     swapNewRating(chatStartRatings[i].children[2], rating, ratingNum, username);
+    //   }
+    // }
+    chatStartRatings[i].style.display = 'none';
+  }
+  const chatEndRatings = document.querySelectorAll('div.live-game-over-component')
+  for (let i = 0; i < chatEndRatings.length; i++) {
+    // TODO: Change chat ratings
+    // const rating = chatEndRatings[i].querySelector('span.user-rating');
+    // if (rating !== null) {
+    //   const ratingNum = parseInt(rating.innerHTML.replace(/\D/g,''), 10);
+    //   const username = chatEndRatings[i].querySelector('.user-username').innerHTML + '_' + i.toString(); 
+    //   if (!isNaN(ratingNum) && globalRatings.get(username) !== ratingNum) {
+    //     swapNewRating(chatEndRatings[i].children[2], rating, ratingNum, username);
+    //   }
+    // }
+    chatEndRatings[i].style.display = 'none';
   }
 }
 

@@ -3,7 +3,7 @@
 ## How it works
 Chess Tier replaces the Elo of yourself and your chess.com opponents with the equivalent rank using a tiered rating system.
 
-There are currently 5 tiers, each with 4 to 5 sub-tiers.
+There are currently 6 tiers, each with 4 to 5 sub-tiers.
 - 🔔 Bronze (~25% of players)
 - 🥄 Silver (~25% of players)
 - ⚜ Gold (~25% of players)
