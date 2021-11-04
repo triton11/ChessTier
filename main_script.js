@@ -1,12 +1,18 @@
 // This is needed to prevent infinite looping when the mutation observer is
 // triggered.
 let globalRatings = new Map();
+let useTier = true;
+let useUSCF = false;
 
 function run() {
   // Hide end user rating
   const newRatingNode = document.querySelector('span.new-rating-component');
   if (newRatingNode) {
     newRatingNode.style.display = 'none';
+  }
+  const ratingChangeNode = document.querySelector('div.rating-change-right');
+  if (ratingChangeNode) {
+    ratingChangeNode.style.display = 'none';
   }
 
   // Replace user rating with a tier
@@ -28,53 +34,24 @@ function run() {
     const rating = endRating.querySelector('span.new-rating-component');
     const ratingNum = parseInt(rating.innerHTML.replace(/\D/g,''), 10);
     const ratingChange = endRating.querySelector('div.rating-change-right');
-    const ratingChangeNum = parseInt(ratingChange.innerHTML.replace(/\D/g,''), 10);
+    const ratingChangeNum = parseInt(ratingChange.innerHTML.replace(/[^\d.-]/g,''), 10);
     const mapKey = 'endRating';
     const oldRatingNum = globalRatings.get(mapKey);
     if (!isNaN(ratingNum) && oldRatingNum !== ratingNum) {
       swapNewRating(endRating, rating, ratingNum, mapKey);
-      if (!isNaN(oldRatingNum) && calculateTier(ratingNum) !== calculateTier(oldRatingNum)) {
-        ratingChange.classList.add('rating-changed');
-        if (oldRatingNum < ratingNum) {
-          ratingChange.style.display = 'block';
-          ratingChange.innerHTML = 'Promoted!';
-        } else {
-          ratingChange.style.display = 'block';
-          ratingChange.innerHTML = 'Demoted.';
-        }
-      } else if (!ratingChange.classList.contains('rating-changed')) {
-        ratingChange.style.display = 'none';
-      } else {
-        ratingChange.style.display = 'block';
-      }
+      swapChangeNode(endRating, ratingChange, ratingNum, ratingChangeNum);
     }
   }
 
   // Hide chat ratings
   const chatStartRatings = document.querySelectorAll('div.live-game-start-component')
   for (let i = 0; i < chatStartRatings.length; i++) {
-    // TODO: Change chat ratings
-    // const rating = chatStartRatings[i].querySelector('span.user-rating');
-    // if (rating !== null) {
-    //   const ratingNum = parseInt(rating.innerHTML.replace(/\D/g,''), 10);
-    //   const username = chatStartRatings[i].querySelector('.user-username').innerHTML + '_' + i.toString(); 
-    //   if (!isNaN(ratingNum) && globalRatings.get(username) !== ratingNum) {
-    //     swapNewRating(chatStartRatings[i].children[2], rating, ratingNum, username);
-    //   }
-    // }
+    // TODO: Change chat ratings with jQuery
     chatStartRatings[i].style.display = 'none';
   }
   const chatEndRatings = document.querySelectorAll('div.live-game-over-component')
   for (let i = 0; i < chatEndRatings.length; i++) {
-    // TODO: Change chat ratings
-    // const rating = chatEndRatings[i].querySelector('span.user-rating');
-    // if (rating !== null) {
-    //   const ratingNum = parseInt(rating.innerHTML.replace(/\D/g,''), 10);
-    //   const username = chatEndRatings[i].querySelector('.user-username').innerHTML + '_' + i.toString(); 
-    //   if (!isNaN(ratingNum) && globalRatings.get(username) !== ratingNum) {
-    //     swapNewRating(chatEndRatings[i].children[2], rating, ratingNum, username);
-    //   }
-    // }
+    // TODO: Change chat ratings with jQuery
     chatEndRatings[i].style.display = 'none';
   }
 }
@@ -103,6 +80,32 @@ function makeRatingNode(ratingNum, globalKey) {
   }
   childNode.appendChild(childNodeText);
   return childNode;
+}
+
+function swapChangeNode(endRating, rantingChange, ratingNum, ratingChangeNum) {
+  if (calculateTier(ratingNum) !== calculateTier(ratingNum - ratingChangeNum)) {
+    const previousChangeNode = endRating.querySelector('#previous-rating-change');
+    if (previousChangeNode !== null) {
+      endRating.removeChild(previousChangeNode);
+    }
+    if (ratingChangeNum > 0) {
+      let changeNodeText = document.createTextNode('Promoted!');
+      const childNode = document.createElement('span');
+      childNode.setAttribute('id', 'previous-rating-change');
+      childNode.style.color = '#85a94e';
+      childNode.style.fontSize = '1.4rem';
+      childNode.appendChild(changeNodeText);
+      endRating.insertBefore(childNode, rantingChange);
+    } else {
+      let changeNodeText = document.createTextNode('Demoted.');
+      const childNode = document.createElement('span');
+      childNode.setAttribute('id', 'previous-rating-change');
+      childNode.style.color = '#a7a6a2';
+      childNode.style.fontSize = '1.4rem';
+      childNode.appendChild(changeNodeText);
+      endRating.insertBefore(childNode, rantingChange);
+    }
+  }
 }
 
 function calculateTier(ratingNum) {

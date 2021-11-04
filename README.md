@@ -202,7 +202,7 @@ For this option, I did my best to translate chess.com Elos into USCF Elos using 
     <td>&gt 2100</td>
     <td>&gt 1900</td>
     <td>&gt 2500</td>
-    <td>&lt 2500</td>
+    <td>&gt 2500</td>
   </tr>
 </table>
 
