@@ -1,15 +1,16 @@
-## Chess Tier: Replace your chess.com Elo with a Tier!
+## Chess Tier: Replace your chess.com rating with a Tier!
 
 ## How it works
-Chess Tier replaces the Elo of yourself and your chess.com opponents with the equivalent rank using a tiered rating system.
+Chess Tier replaces the rating of yourself and your chess.com opponents with the equivalent rank using a tiered ranking system.
 
-There are currently 6 tiers, each with 4 to 5 sub-tiers.
+There are currently 7 tiers, each with 4 to 5 sub-tiers.
 - 🔔 Bronze (~25% of players)
 - 🥄 Silver (~25% of players)
 - ⚜ Gold (~25% of players)
 - ⚔️ Platinum (~15% of players)
 - 💎 Diamond (~7% of players)
 - 👑 Champion (~3% of players)
+- 🔮 Legendary (~0.5% of players)
 
 Your tier is calculated by taking your chess.com Elo (technically a <a href="https://www.chess.com/blog/kurtgodden/elo-to-glicko-your-rating-explained">Glicko rating</a>) for the specified time control and mapping it to a tier based on the <a href="https://www.chess.com/leaderboard/live">global distribution</a> of player's Elos for that time control. I chose tier mappings using a distribution with a positive skew, in order to get tiers similar to <a href="https://www.esportstales.com/league-of-legends/rank-distribution-season-9">those used in Overwatch, League of Legends, and Dota</a> while also balancing against inactive players.
 
@@ -198,11 +199,39 @@ For this option, I did my best to translate chess.com Elos into USCF Elos using 
     <td>&lt 2500</td>
   </tr>
   <tr>
-    <td>Grand 👑 Champ</td>
-    <td>&gt 2100</td>
-    <td>&gt 1900</td>
-    <td>&gt 2500</td>
-    <td>&gt 2500</td>
+    <td>🔮 Legendary I</td>
+    <td>&lt 2225</td>
+    <td>&lt 2025</td>
+    <td>&lt 2575</td>
+    <td>&lt 2575</td>
+  </tr>
+  <tr>
+    <td>🔮 Legendary II</td>
+    <td>&lt 2350</td>
+    <td>&lt 2150</td>
+    <td>&lt 2650</td>
+    <td>&lt 2650</td>
+  </tr>
+  <tr>
+    <td>🔮 Legendary III</td>
+    <td>&lt 2475</td>
+    <td>&lt 2275</td>
+    <td>&lt 2725</td>
+    <td>&lt 2725</td>
+  </tr>
+  <tr>
+    <td>🔮 Legendary IV</td>
+    <td>&lt 2600</td>
+    <td>&lt 2400</td>
+    <td>&lt 2800</td>
+    <td>&lt 2800</td>
+  </tr>
+  <tr>
+    <td>Legendary 🏆 Champion</td>
+    <td>&gt 2600</td>
+    <td>&gt 2400</td>
+    <td>&gt 2800</td>
+    <td>&gt 2800</td>
   </tr>
 </table>
 

@@ -182,8 +182,20 @@ function calculateBlitzTier(ratingNum) {
     return '👑 Champion III';
   } else if (ratingNum < 2100) {
     return '👑 Champion IV';
+  } else if (ratingNum < 2225) {
+    return '🔮 Legendary I';
+  } else if (ratingNum < 2350) {
+    return '🔮 Legendary II';
+  } else if (ratingNum < 2475) {
+    return '🔮 Legendary III';
+  } else if (ratingNum < 2600) {
+    return '🔮 Legendary IV';
+  } else if (ratingNum < 2850) {
+    return 'Legendary 🏆 Champion';
+  } else if (ratingNum < 3000) {
+    return 'Mythical 🏆 Champion'
   } else {
-    return 'Grand 👑 Champion'
+    return '✨ Supreme Champion ✨'
   }
 }
 
@@ -236,8 +248,20 @@ function calculateRapidTier(ratingNum) {
     return '👑 Champion III';
   } else if (ratingNum < 1900) {
     return '👑 Champion IV';
+  } else if (ratingNum < 2025) {
+    return '🔮 Legendary I';
+  } else if (ratingNum < 2150) {
+    return '🔮 Legendary II';
+  } else if (ratingNum < 2275) {
+    return '🔮 Legendary III';
+  } else if (ratingNum < 2400) {
+    return '🔮 Legendary IV';
+  } else if (ratingNum < 2600) {
+    return 'Legendary 🏆 Champion';
+  } else if (ratingNum < 2800) {
+    return 'Mythical 🏆 Champion'
   } else {
-    return 'Grand 👑 Champion'
+    return '✨ Supreme Champion ✨'
   }
 }
 
@@ -290,8 +314,20 @@ function calculateDailyTier(ratingNum) {
     return '👑 Champion III';
   } else if (ratingNum < 2000) {
     return '👑 Champion IV';
+  } else if (ratingNum < 2125) {
+    return '🔮 Legendary I';
+  } else if (ratingNum < 2250) {
+    return '🔮 Legendary II';
+  } else if (ratingNum < 2375) {
+    return '🔮 Legendary III';
+  } else if (ratingNum < 2500) {
+    return '🔮 Legendary IV';
+  } else if (ratingNum < 2700) {
+    return 'Legendary 🏆 Champion';
+  } else if (ratingNum < 2900) {
+    return 'Mythical 🏆 Champion'
   } else {
-    return 'Grand 👑 Champion'
+    return '✨ Supreme Champion ✨'
   }
 }
 
@@ -344,8 +380,20 @@ function uscfNormalizedBlitzTier(ratingNum) {
     return '👑 Champion III';
   } else if (ratingNum < 2500) {
     return '👑 Champion IV';
+  } else if (ratingNum < 2575) {
+    return '🔮 Legendary I';
+  } else if (ratingNum < 2650) {
+    return '🔮 Legendary II';
+  } else if (ratingNum < 2725) {
+    return '🔮 Legendary III';
+  } else if (ratingNum < 2800) {
+    return '🔮 Legendary IV';
+  } else if (ratingNum < 2900) {
+    return 'Legendary 🏆 Champion';
+  } else if (ratingNum < 3000) {
+    return 'Mythical 🏆 Champion'
   } else {
-    return 'Grand 👑 Champion'
+    return '✨ Supreme Champion ✨'
   }
 }
 
@@ -398,8 +446,20 @@ function uscfNormalizedRapidTier(ratingNum) {
     return '👑 Champion III';
   } else if (ratingNum < 2500) {
     return '👑 Champion IV';
+  } else if (ratingNum < 2575) {
+    return '🔮 Legendary I';
+  } else if (ratingNum < 2650) {
+    return '🔮 Legendary II';
+  } else if (ratingNum < 2725) {
+    return '🔮 Legendary III';
+  } else if (ratingNum < 2800) {
+    return '🔮 Legendary IV';
+  } else if (ratingNum < 2900) {
+    return 'Legendary 🏆 Champion';
+  } else if (ratingNum < 3000) {
+    return 'Mythical 🏆 Champion'
   } else {
-    return 'Grand 👑 Champion'
+    return '✨ Supreme Champion ✨'
   }
 }
 
