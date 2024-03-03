@@ -3,6 +3,8 @@
 let globalRatings = new Map();
 let useTier = true;
 let useUSCF = false;
+let useNoRating = false;
+const emptyRating = '∅';
 
 function run() {
   // Hide end user rating
@@ -32,9 +34,9 @@ function run() {
   const endRating = document.querySelector('div.rating-value-value');
   if (endRating !== null) {
     const rating = endRating.querySelector('span.new-rating-component');
-    const ratingNum = parseInt(rating.innerHTML.replace(/\D/g,''), 10);
+    const ratingNum = parseInt(rating.innerHTML.replace(/\D/g, ''), 10);
     const ratingChange = endRating.querySelector('div.rating-change-right');
-    const ratingChangeNum = parseInt(ratingChange.innerHTML.replace(/[^\d.-]/g,''), 10);
+    const ratingChangeNum = parseInt(ratingChange.innerHTML.replace(/[^\d.-]/g, ''), 10);
     const mapKey = 'endRating';
     const oldRatingNum = globalRatings.get(mapKey);
     if (!isNaN(ratingNum) && oldRatingNum !== ratingNum) {
@@ -134,6 +136,7 @@ function getTimeControl() {
 }
 
 function calculateBlitzTier(ratingNum) {
+  if (useNoRating) return emptyRating
   if (ratingNum < 200) {
     return '🔔 Bronze I';
   } else if (ratingNum < 300) {
@@ -200,6 +203,7 @@ function calculateBlitzTier(ratingNum) {
 }
 
 function calculateRapidTier(ratingNum) {
+  if (useNoRating) return emptyRating
   if (ratingNum < 200) {
     return '🔔 Bronze I';
   } else if (ratingNum < 300) {
@@ -266,6 +270,7 @@ function calculateRapidTier(ratingNum) {
 }
 
 function calculateDailyTier(ratingNum) {
+  if (useNoRating) return emptyRating
   if (ratingNum < 200) {
     return '🔔 Bronze I';
   } else if (ratingNum < 400) {
@@ -332,6 +337,7 @@ function calculateDailyTier(ratingNum) {
 }
 
 function uscfNormalizedBlitzTier(ratingNum) {
+  if (useNoRating) return emptyRating
   if (ratingNum < 200) {
     return '🔔 Bronze I';
   } else if (ratingNum < 400) {
@@ -398,6 +404,7 @@ function uscfNormalizedBlitzTier(ratingNum) {
 }
 
 function uscfNormalizedRapidTier(ratingNum) {
+  if (useNoRating) return emptyRating
   if (ratingNum < 250) {
     return '🔔 Bronze I';
   } else if (ratingNum < 500) {
@@ -463,20 +470,38 @@ function uscfNormalizedRapidTier(ratingNum) {
   }
 }
 
-chrome.storage.sync.get(['useTier', 'useUSCF'], (items) => {
-  if (items['useTier'] === undefined) {
-    chrome.storage.sync.set({ 'useTier': true });
-  }
+chrome.storage.sync.get(['useTier', 'useUSCF', 'useNoRating'], (items) => {
+
   if (items['useUSCF'] === undefined) {
     chrome.storage.sync.set({ 'useUSCF': false });
   }
-  if (items['useTier'] === false) {
-    return;
+
+  if (items['useTier'] === undefined) {
+    chrome.storage.sync.set({ 'useTier': true });
   }
+
+  if (items['useNoRating'] === undefined) {
+    chrome.storage.sync.set({ 'useNoRating': false });
+  }
+
   if (items['useUSCF'] !== undefined) {
     useUSCF = items['useUSCF'];
   }
-  var observer = new MutationObserver(function(mutations) {
+
+  if (items['useNoRating'] !== undefined) {
+    useNoRating = items['useNoRating'];
+  }
+
+  if (useNoRating) {
+    useTier = true;
+    chrome.storage.sync.set({ 'useTier': true });
+  }
+
+  if (items['useUSCF'] === true) {
+    return;
+  }
+
+  var observer = new MutationObserver(function (mutations) {
     run();
   });
 

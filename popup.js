@@ -9,6 +9,12 @@ chrome.storage.sync.get("useUSCF", ({ useUSCF }) => {
   toggleUSCF.checked = useUSCF;
 });
 
+let toggleNoRating = document.getElementById("toggleNoRating");
+chrome.storage.sync.get("useNoRating", ({ useNoRating }) => {
+  toggleNoRating.checked = useNoRating ?? false;
+});
+
+
 // When the toggleTier button is clicked, swap useTier
 toggleTier.addEventListener("click", async () => {
   chrome.storage.sync.get("useTier", ({ useTier }) => {
@@ -27,6 +33,17 @@ toggleUSCF.addEventListener("click", async () => {
       chrome.storage.sync.set({ 'useUSCF': false });
   	} else {
 	  chrome.storage.sync.set({ 'useUSCF': true });
+  	}
+  });
+});
+
+// When the toggleNoRating button is clicked, swap useNoRating
+toggleNoRating.addEventListener("click", async () => {
+  chrome.storage.sync.get("useNoRating", ({ useNoRating }) => {
+  	if (useNoRating === undefined || useNoRating === true) {
+      chrome.storage.sync.set({ 'useNoRating': false });
+  	} else {
+	  chrome.storage.sync.set({ 'useNoRating': true });
   	}
   });
 });
